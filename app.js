@@ -8,13 +8,16 @@ var bodyParser = require('body-parser');
 var mongo = require('mongodb')
 var monk = require('monk');
 
-var db = monk('localhost:27017/test')
+var app = express();
 
+var db = monk('localhost:27017/test')
+app.use(function(req, res, next){
+  req.db = db;
+  next();
+});
 var index = require('./routes/index');
 var users = require('./routes/users');
 var tabla = require('./routes/tabla');
-
-var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
