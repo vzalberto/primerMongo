@@ -10,11 +10,12 @@ var monk = require('monk');
 
 var app = express();
 
-var db = monk('localhost:27017/test')
+var db = monk('localhost/test')
 app.use(function(req, res, next){
   req.db = db;
   next();
 });
+
 var index = require('./routes/index');
 var users = require('./routes/users');
 var tabla = require('./routes/tabla');
