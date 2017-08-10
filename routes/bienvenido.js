@@ -1,12 +1,16 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
-router.post('/', function(req, res, next) {
+router.post('/', function(req, res, next){
+  console.log(req.body.txtClave);
+  console.log(req.body.txtUsuario);
   var db = req.db;
-  var refacciones = db.get('refacciones');
-  refacciones.find({}, {}, function(e, docs){
-    res.render('tabla', { title: 'Express', datos: docs });
+  var usuarios = db.get('usuarios');
+  usuarios.find({usuario: req.body.txtUsuario, pass: req.body.txtClave }, {}, function(e, docs){
+    if(docs.length > 0)
+      res.render('bienvenido', { title: 'Express', datos: docs });
+    else
+      res.render('index', { title: 'NEL'});
   });
 });
 
